@@ -4,7 +4,7 @@
 
 <a href="https://circleci.com/gh/ykfe"><img src="https://img.shields.io/circleci/build/github/ykfe/egg-react-ssr/dev.svg" alt="Build Status"></a>
 <a href="https://codecov.io/gh/ykfe/egg-react-ssr"><img src="https://codecov.io/gh/ykfe/egg-react-ssr/branch/dev/graph/badge.svg" alt="Coverage Status"></a>
-<a href="https://npmcharts.com/compare/yk-cli"><img src="https://img.shields.io/npm/dt/yk-cli" alt="download"></a>
+<a href="https://npmcharts.com/compare/ykfe-utils"><img src="https://img.shields.io/npm/dt/ykfe-utils" alt="download"></a>
 <a href="https://standardjs.com"><img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="standardjs"></a>
 <a href="https://github.com/facebook/jest"><img src="https://img.shields.io/badge/tested_with-jest-99424f.svg" alt="License"></a>
 <a href="https://github.com/ykfe/egg-react-ssr"><img src="https://img.shields.io/npm/l/vue.svg" alt="License"></a>
@@ -14,7 +14,7 @@
 
 - 小：实现方式简洁，生产环境构建出来的bundle为同等复杂度的next.js项目的0.7倍，生成文件数量相比于next.js减少非常多
 - 全：支持HMR，支持本地开发以及生产环境CSR/SSR两种渲染模式无缝切换，支持定制组件的渲染模式，同时支持TypeScript版本
-- 美：基于[React](https://reactjs.org/)和[Eggjs](https://eggjs.org/)框架，拥有强大的插件生态，配置非黑盒，且一切关键位置皆可通过config.ssr.js来配置
+- 美：基于[React](https://reactjs.org/)和[Eggjs](https://eggjs.org/)框架，拥有强大的插件生态，配置非黑盒，方便加入当前业务的个性化逻辑
 
 `正在使用这个项目的公司(应用), 如果您正在使用但名单中没有列出来的话请提issue，欢迎推广分享`
 
@@ -73,7 +73,7 @@ $ npm start # 建议以本方式启动应用，同时启动服务端渲染 + 客
 $ npm run ssr 
 ```
 
-3）只启动客户端渲染
+3）启动客户端渲染
 
 仅限于本地开发使用，启动监听8000端口，只启动客户端渲染，相当于传统的cra脚手架开发模式
 
@@ -84,7 +84,7 @@ $ npm run csr
 4）配套的脚本
 
 ```bash
-$ npm run prod    # 使用egg-scripts启动应用模拟SSR应用生产环境
+$ npm run prod    # 使用egg-scripts模拟SSR应用生产环境，如无特殊定制要求生产环境可以用该方式启动
 $ npm run build   # 打包服务端以及客户端资源文件
 $ npm run analyze # 可视化分析客户端打包的资源详情
 ```
@@ -109,8 +109,13 @@ $ npm run analyze # 可视化分析客户端打包的资源详情
 - [x] 配套结合[antd](https://github.com/ykfe/egg-react-ssr/tree/master/example/ssr-with-antd)的example的实现
 - [x] 配套结合[react-loadable](https://github.com/ykfe/egg-react-ssr/tree/master/example/ssr-with-loadable)做路由分割的example的实现
 - [x] 配套结合[dva](https://github.com/ykfe/egg-react-ssr/tree/master/example/ssr-with-dva)做数据管理的example的实现
-- [x] 配套阿里云serverless [FC](https://github.com/ykfe/ssr-with-fc)版本的实现
+- [x] 配套结合[ssr-with-multipage](https://github.com/ykfe/egg-react-ssr/tree/dev/example/ssr-with-multipage)多页面应用的example
+- [x] 配套结合[Rax](https://github.com/ykfe/egg-react-ssr/tree/dev/example/ssr-with-rax)版本的实现
 - [x] 配套[TypeScript](https://github.com/ykfe/egg-react-ssr/tree/dev/example/ssr-with-ts)版本的实现 
+
+## 结合Serverless
+
+我们在Serverless场景下的[SSR框架](https://github.com/ykfe/ssr)已经正式发布，如果你更喜欢平滑开箱即用体验的更高层次解决方案并且希望能够快速部署。推荐使用该框架进行开发。与本项目不冲突，互相补位
 
 ### 写法
 
@@ -250,7 +255,8 @@ module.exports = {
     `<script src='/static/js/vendor.chunk.js'></script>`,
     `<script src='/static/js/Page.chunk.js'></script>`
   ], // 客户端需要加载的静态资源文件表
-  serverJs: resolvePath(`dist/Page.server.js`): string|function // 打包后的server端的bundle文件路径支持传入CDN地址, 接受直接传入require后的function
+  serverJs: resolvePath(`dist/Page.server.js`): string|function, // 打包后的server端的bundle文件路径支持传入CDN地址, 接受直接传入require后的function
+  layout: resolvePath(`dist/Layout.server.js`): string|function // 打包后的server端的bundle文件路径支持传入CDN地址, 接受直接传入require后的function
 }
 ```
 
@@ -321,20 +327,21 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/zhangyuang"><img src="https://avatars3.githubusercontent.com/u/17424434?v=4" width="100px;" alt="LeonCheung"/><br /><sub><b>LeonCheung</b></sub></a><br /><a href="https://github.com/ykfe/egg-react-ssr/commits?author=zhangyuang" title="Code">💻</a></td>
-    <td align="center"><a href="http://i5ting.com"><img src="https://avatars3.githubusercontent.com/u/3118295?v=4" width="100px;" alt="狼叔"/><br /><sub><b>狼叔</b></sub></a><br /><a href="https://github.com/ykfe/egg-react-ssr/commits?author=i5ting" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/jerryYuX"><img src="https://avatars2.githubusercontent.com/u/33367577?v=4" width="100px;" alt="jerryYu"/><br /><sub><b>jerryYu</b></sub></a><br /><a href="https://github.com/ykfe/egg-react-ssr/commits?author=jerryYuX" title="Code">💻</a></td>
-     <td align="center"><a href="https://github.com/ivc369"><img src="https://avatars0.githubusercontent.com/u/16490377?v=4" width="100px;" alt="Menteceso"/><br /><sub><b>Menteceso</b></sub></a><br /><a href="https://github.com/ykfe/egg-react-ssr/commits?author=ivc369" title="Documentation">📖</a></td>
-    <td align="center"><a href="http://www.lessing.online/xx-blog/"><img src="https://avatars2.githubusercontent.com/u/21156871?v=4" width="100px;" alt="Xu Zhiyong"/><br /><sub><b>Xu Zhiyong</b></sub></a><br /><a href="https://github.com/ykfe/egg-react-ssr/issues?q=author%3AJohnieXu" title="Bug reports">🐛</a></td>
-    <td align="center"><a href="https://github.com/jxycbjhc"><img src="https://avatars0.githubusercontent.com/u/16661897?v=4" width="100px;" alt="snoy"/><br /><sub><b>snoy</b></sub></a><br /><a href="https://github.com/ykfe/egg-react-ssr/commits?author=jxycbjhc" title="Documentation">📖</a></td>
-    <td align="center"><a href="http://zxy.im"><img src="https://avatars2.githubusercontent.com/u/15117664?v=4" width="100px;" alt="zhaoxingyue"/><br /><sub><b>zhaoxingyue</b></sub></a><br /><a href="https://github.com/ykfe/egg-react-ssr/commits?author=zhaoxingyue" title="Documentation">📖</a></td>
-    <td align="center"><a href="http://www.puacode.com"><img src="https://avatars3.githubusercontent.com/u/48011106?v=4" width="100px;" alt="九牧"/><br /><sub><b>九牧</b></sub></a><br /><a href="https://github.com/ykfe/egg-react-ssr/issues?q=author%3Adeancn175" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/zhangyuang"><img src="https://avatars3.githubusercontent.com/u/17424434?v=4" width="100px;" alt=""/><br /><sub><b>LeonCheung</b></sub></a><br /><a href="https://github.com/ykfe/egg-react-ssr/commits?author=zhangyuang" title="Code">💻</a></td>
+    <td align="center"><a href="http://i5ting.com"><img src="https://avatars3.githubusercontent.com/u/3118295?v=4" width="100px;" alt=""/><br /><sub><b>狼叔</b></sub></a><br /><a href="https://github.com/ykfe/egg-react-ssr/commits?author=i5ting" title="Code">💻</a></td>
+    <td align="center"><a href="http://www.lessing.online/xx-blog/"><img src="https://avatars2.githubusercontent.com/u/21156871?v=4" width="100px;" alt=""/><br /><sub><b>Xu Zhiyong</b></sub></a><br /><a href="https://github.com/ykfe/egg-react-ssr/issues?q=author%3AJohnieXu" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://ivc.me"><img src="https://avatars0.githubusercontent.com/u/16490377?v=4" width="100px;" alt=""/><br /><sub><b>Menteceso</b></sub></a><br /><a href="https://github.com/ykfe/egg-react-ssr/commits?author=ivc369" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/jerryYuX"><img src="https://avatars2.githubusercontent.com/u/33367577?v=4" width="100px;" alt=""/><br /><sub><b>jerryYu</b></sub></a><br /><a href="https://github.com/ykfe/egg-react-ssr/commits?author=jerryYuX" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/qq1353709"><img src="https://avatars3.githubusercontent.com/u/7944687?v=4" width="100px;" alt=""/><br /><sub><b>dydong</b></sub></a><br /><a href="https://github.com/ykfe/egg-react-ssr/commits?author=qq1353709" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/jxycbjhc"><img src="https://avatars0.githubusercontent.com/u/16661897?v=4" width="100px;" alt=""/><br /><sub><b>snoy</b></sub></a><br /><a href="https://github.com/ykfe/egg-react-ssr/commits?author=jxycbjhc" title="Documentation">📖</a></td>
+    <td align="center"><a href="http://zxy.im"><img src="https://avatars2.githubusercontent.com/u/15117664?v=4" width="100px;" alt=""/><br /><sub><b>zhaoxingyue</b></sub></a><br /><a href="https://github.com/ykfe/egg-react-ssr/commits?author=zhaoxingyue" title="Documentation">📖</a></td>
   </tr>
   <tr>
-    <td align="center"><a href="https://github.com/robert7git"><img src="https://avatars2.githubusercontent.com/u/6889441?v=4" width="100px;" alt="robert.xu"/><br /><sub><b>robert.xu</b></sub></a><br /><a href="https://github.com/ykfe/egg-react-ssr/commits?author=robert7git" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/c690554125"><img src="https://avatars3.githubusercontent.com/u/13865568?v=4" width="100px;" alt="Cheng Zhongmin"/><br /><sub><b>Cheng Zhongmin</b></sub></a><br /><a href="https://github.com/ykfe/egg-react-ssr/issues?q=author%3Ac690554125" title="Bug reports">🐛</a></td>
-        <td align="center"><a href="https://github.com/zhusjfaker"><img src="https://avatars1.githubusercontent.com/u/31839470?v=4" width="100px;" alt="zhushijie"/><br /><sub><b>zhushijie</b></sub></a><br /><a href="https://github.com/ykfe/egg-react-ssr/commits?author=zhusjfaker" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/JohannLai"><img src="https://avatars0.githubusercontent.com/u/10769405?v=4" width="100px;" alt="JohannLai"/><br /><sub><b>JohannLai</b></sub></a><br /><a href="https://github.com/ykfe/egg-react-ssr/issues?q=author%3AJohannLai" title="Bug reports">🐛</a></td>
+   <td align="center"><a href="http://www.puacode.com"><img src="https://avatars3.githubusercontent.com/u/48011106?v=4" width="100px;" alt=""/><br /><sub><b>九牧</b></sub></a><br /><a href="https://github.com/ykfe/egg-react-ssr/issues?q=author%3Adeancn175" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/JohannLai"><img src="https://avatars0.githubusercontent.com/u/10769405?v=4" width="100px;" alt=""/><br /><sub><b>JohannLai</b></sub></a><br /><a href="https://github.com/ykfe/egg-react-ssr/issues?q=author%3AJohannLai" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/robert7git"><img src="https://avatars2.githubusercontent.com/u/6889441?v=4" width="100px;" alt=""/><br /><sub><b>robert.xu</b></sub></a><br /><a href="https://github.com/ykfe/egg-react-ssr/commits?author=robert7git" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/zhusjfaker"><img src="https://avatars1.githubusercontent.com/u/31839470?v=4" width="100px;" alt=""/><br /><sub><b>zhushijie</b></sub></a><br /><a href="https://github.com/ykfe/egg-react-ssr/commits?author=zhusjfaker" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/c690554125"><img src="https://avatars3.githubusercontent.com/u/13865568?v=4" width="100px;" alt=""/><br /><sub><b>Cheng Zhongmin</b></sub></a><br /><a href="https://github.com/ykfe/egg-react-ssr/issues?q=author%3Ac690554125" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 

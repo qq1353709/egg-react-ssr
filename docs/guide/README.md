@@ -6,7 +6,8 @@
 
 由于React官方缺少完整的SSR(Server-Side Rendering)文档，只是简单的介绍了一下需要用到的API, 同时网络上的文章也良莠不齐，大都是十分简略的实现方式，无法适用于大规模的线上应用。
 
-本文档假设你已经熟悉React本身，并且具有 Node.js 和 webpack 的一定使用经验。即使不多也没关系，我们尽量以通俗易懂的方式来将这些代码解释的很详细。如果你倾向于使用提供了平滑开箱即用体验的更高层次解决方案，你应该去尝试使用[umi.js](https://umijs.org/zh/)。事实上它的[SSR PR](https://github.com/umijs/umi/pull/2543)方案大部分也是我们贡献的。它是企业级 react 应用框架，支持约定式路由，开箱即用。但是，如果你需要更直接地控制应用程序的结构，umi.js 并不适合这种使用场景。无论如何，阅读本文档将更有助于更好地了解一切如何运行。
+本文档假设你已经熟悉React本身，并且具有 Node.js 和 webpack 的一定使用经验。即使不多也没关系，我们尽量以通俗易懂的方式来将这些代码解释的很详细。我们在Serverless场景下的[SSR框架](https://github.com/ykfe/ssr)已经正式发布，如果你更喜欢平滑开箱即用体验的更高层次解决方案并且希望能够快速部署，推荐使用该框架进行开发。
+但是，如果你需要更直接地控制应用程序的结构，它并不适合这种使用场景。无论如何，阅读本文档将更有助于更好地了解一切如何运行。
 
 最后，请注意，本文档中的解决方案不是限定的,但是经过多次优化我们发现它们对我们来说很好，但这并不意味着无法继续改进。可能会在未来持续改进，欢迎提交 [pull request](https://github.com/ykfe/egg-react-ssr/pulls) 作出贡献！
 
@@ -43,6 +44,7 @@
 - 独创[最佳发布实践](http://ykfe.net/guide/deploy.html)，让你更新页面无需重启应用机器
 - 配套结合[antd](https://github.com/ykfe/egg-react-ssr/tree/master/example/ssr-with-antd)的example的实现
 - 配套结合[react-loadable](https://github.com/ykfe/egg-react-ssr/tree/master/example/ssr-with-loadable)做路由分割的example的实现
+- 配套结合[ssr-with-multipage](https://github.com/ykfe/egg-react-ssr/tree/dev/example/ssr-with-multipage)多页面应用的example
 - 配套结合[dva](https://github.com/ykfe/egg-react-ssr/tree/master/example/ssr-with-dva)做数据管理的example的实现
 - 配套阿里云serverless [FC](https://github.com/ykfe/ssr-with-fc)版本的实现
 - 配套[TypeScript](https://github.com/ykfe/egg-react-ssr/tree/dev/example/ssr-with-ts)版本的实现 

@@ -23,10 +23,12 @@ class PageController extends Controller {
       ]
 
       const serverJs = `${dist}/${entry}.server.js`
+      const layout = `${dist}/Layout.server.js`
       Object.assign(ctx.app.config, ssrConfig, {
         serverJs,
         injectCss,
-        injectScript
+        injectScript,
+        layout
       })
 
       const stream = await renderToStream(ctx, ctx.app.config)

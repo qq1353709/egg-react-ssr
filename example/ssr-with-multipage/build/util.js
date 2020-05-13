@@ -1,7 +1,7 @@
-const paths = require('./paths')
 const fs = require('fs')
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const paths = require('./paths')
 const publicPath = paths.servedPath
 const shouldUseRelativeAssetPaths = publicPath === './'
 const isDev = process.env.NODE_ENV === 'development'
@@ -46,7 +46,10 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
 
 const getEntry = (type) => {
   const entrys = fs.readdirSync(paths.entryPath)
-  let entry = {}
+  const entry = {}
+  if (type !== 'client') {
+    entry.layout = paths.layout
+  }
   entrys.map(item => {
     const fileName = item.replace(/\.(js|ts)/, '')
     entry[fileName] = type === 'client' ? ['@babel/polyfill', path.join(paths.entryPath, fileName)] : path.join(paths.entryPath, item)

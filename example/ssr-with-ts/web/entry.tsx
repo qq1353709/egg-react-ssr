@@ -2,8 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter, StaticRouter, Route, Switch } from 'react-router-dom'
 import { Context } from 'midway'
-import { getWrappedComponent, getComponent } from 'ykfe-utils'
-import { RouteItem } from './interface/route'
+import { getWrappedComponent, getComponent, RouteItem } from 'ykfe-utils'
 import defaultLayout from './layout'
 
 const { routes } = require('../config/config.ssr')
@@ -19,9 +18,7 @@ const clientRender = async (): Promise<void> => {
           const activeComponent = item.Component()
           const Layout = activeComponent.Layout || defaultLayout
           const WrappedComponent = getWrappedComponent(activeComponent)
-          return <Route exact={item.exact} key={item.path} path={item.path} render={() => {
-            return <Layout><WrappedComponent /></Layout>
-          }} />
+          return <Route exact={item.exact} key={item.path} path={item.path} render={() => <Layout key={window.location.pathname}><WrappedComponent /></Layout> } />
         })
       }
     </Switch>
